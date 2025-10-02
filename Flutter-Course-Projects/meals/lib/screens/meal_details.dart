@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:meals/models/meal.dart';
+import 'package:meals/widgets/ingredients_list.dart';
 import 'package:meals/widgets/photos.dart';
+import 'package:meals/widgets/steps_list.dart';
 
 class MealDetailsScreen extends StatelessWidget {
   const MealDetailsScreen({super.key, required this.meal});
@@ -11,41 +13,12 @@ class MealDetailsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('${meal.title} Details')),
-      body: Column(
+      body: ListView(
         children: [
           Photos(check: 2, meal: meal),
           const SizedBox(height: 14),
-          Text(
-            'Ingredients',
-            style: Theme.of(context).textTheme.titleLarge!.copyWith(
-              color: Theme.of(context).colorScheme.primary,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          const SizedBox(height: 14),
-          for (final ingredient in meal.ingredients)
-            Text(
-              ingredient,
-              style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                color: Theme.of(context).colorScheme.onSurface,
-              ),
-            ),
-          const SizedBox(height: 24),
-          Text(
-            'Steps',
-            style: Theme.of(context).textTheme.titleLarge!.copyWith(
-              color: Theme.of(context).colorScheme.primary,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          const SizedBox(height: 14),
-          for (final ingredient in meal.ingredients)
-            Text(
-              ingredient,
-              style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                color: Theme.of(context).colorScheme.onSurface,
-              ),
-            ),
+          IngredientsList(meal: meal),
+          StepsList(meal: meal),
         ],
       ),
     );
