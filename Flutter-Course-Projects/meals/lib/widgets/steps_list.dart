@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:meals/models/meal.dart';
 
 class StepsList extends StatelessWidget{
-  StepsList({
+  const StepsList({
     super.key,
     required this.meal
     });
