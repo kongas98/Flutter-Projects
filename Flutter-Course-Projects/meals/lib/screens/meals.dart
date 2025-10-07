@@ -3,63 +3,74 @@ import 'package:meals/models/meal.dart';
 import 'package:meals/screens/meal_details.dart';
 import 'package:meals/widgets/meal_item.dart';
 
-class MealsScreen extends StatelessWidget{
+class MealsScreen extends StatelessWidget {
   const MealsScreen({
     super.key,
     required this.meals,
     this.title,
     required this.onToggleFavorite,
-    });
+    required this.favoriteMeals,
+  });
 
   final String? title;
   final List<Meal> meals;
   final void Function(Meal meal) onToggleFavorite;
+  final List<Meal> favoriteMeals;
 
-  void _selectMeal(BuildContext ctx, Meal meal){
-
-    Navigator.push(ctx, MaterialPageRoute(
-      builder: (context) => MealDetailsScreen(meal: meal, onToggleFavorite: onToggleFavorite),
-    ));
-    
+  void _selectMeal(BuildContext ctx, Meal meal) {
+    Navigator.push(
+      ctx,
+      MaterialPageRoute(
+        builder:
+            (context) => MealDetailsScreen(
+              meal: meal,
+              onToggleFavorite: onToggleFavorite,
+              isFavorite: favoriteMeals.contains(meal),
+            ),
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-
     Widget content = ListView.builder(
       itemCount: meals.length,
-      itemBuilder: (context, index) => MealItem(meal: meals[index],onSelectedMeal: (){
-        _selectMeal(context,meals[index]);
-      },)
-      );
+      itemBuilder:
+          (context, index) => MealItem(
+            meal: meals[index],
+            onSelectedMeal: () {
+              _selectMeal(context, meals[index]);
+            },
+          ),
+    );
 
-    if (meals.isEmpty){
+    if (meals.isEmpty) {
       content = Center(
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text('Nothing Here',
-            style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                color: Theme.of(context).colorScheme.onPrimaryContainer)),
-            SizedBox(height: 16,),
+            Text(
+              'Nothing Here',
+              style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                color: Theme.of(context).colorScheme.onPrimaryContainer,
+              ),
+            ),
+            SizedBox(height: 16),
             Text(
               'Try selecting a different category!',
               style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                color: Theme.of(context).colorScheme.onPrimaryContainer),)
+                color: Theme.of(context).colorScheme.onPrimaryContainer,
+              ),
+            ),
           ],
         ),
       );
     }
 
-    if (title == null){
+    if (title == null) {
       return content;
     }
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(title!),
-      ),
-      body: content
-    );
+    return Scaffold(appBar: AppBar(title: Text(title!)), body: content);
   }
 }

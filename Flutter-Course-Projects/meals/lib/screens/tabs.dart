@@ -24,7 +24,7 @@ class TabsScreen extends StatefulWidget {
 
 class _TabsScreenState extends State<TabsScreen> {
   int _selectedPageIndex = 0;
-  final List<Meal> _favoriteMeals = [];
+  final List<Meal> favoriteMeals = [];
   Map<Filters, bool> _selectedFilters = kInitialFilters;
 
   void _showInfoMessage(String message) {
@@ -35,14 +35,14 @@ class _TabsScreenState extends State<TabsScreen> {
   }
 
   void _toggleFavoriteStatus(Meal meal) {
-    final isExisting = _favoriteMeals.contains(meal);
+    final isExisting = favoriteMeals.contains(meal);
 
     setState(() {
       if (isExisting) {
-        _favoriteMeals.remove(meal);
+        favoriteMeals.remove(meal);
         _showInfoMessage('Meal is no longer a favorite');
       } else {
-        _favoriteMeals.add(meal);
+        favoriteMeals.add(meal);
         _showInfoMessage('Marked as favorite');
       }
     });
@@ -58,7 +58,7 @@ class _TabsScreenState extends State<TabsScreen> {
     Navigator.of(context).pop();
     if (identifier == 'filters') {
       final result = await Navigator.of(context).push<Map<Filters, bool>>(
-        MaterialPageRoute(builder: (context) => const FiltersScreen()),
+        MaterialPageRoute(builder: (context) => FiltersScreen(currentFilters: _selectedFilters)),
       );
       setState(() {
         _selectedFilters = result ?? kInitialFilters;  
@@ -89,13 +89,15 @@ class _TabsScreenState extends State<TabsScreen> {
     Widget activePage = CategoriesScreen(
       onToggleFavorite: _toggleFavoriteStatus,
       availableMeals: availableMeals,
+      favoriteMeals: favoriteMeals,
     );
     var activePageTitle = 'Categories';
 
     if (_selectedPageIndex == 1) {
       activePage = MealsScreen(
-        meals: _favoriteMeals,
+        meals: favoriteMeals,
         onToggleFavorite: _toggleFavoriteStatus,
+        favoriteMeals: favoriteMeals,
       );
       activePageTitle = 'Favorites';
     }

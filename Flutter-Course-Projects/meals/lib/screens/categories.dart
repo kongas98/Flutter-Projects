@@ -10,10 +10,12 @@ class CategoriesScreen extends StatelessWidget {
     super.key,
     required this.onToggleFavorite,
     required this.availableMeals,
+    required this.favoriteMeals,
     });
 
   final void Function(Meal meal) onToggleFavorite;
   final List<Meal> availableMeals;
+  final List<Meal> favoriteMeals;
 
   void _selectCAtegory(BuildContext context, Category category) {
     final filteredMeals =
@@ -29,6 +31,7 @@ class CategoriesScreen extends StatelessWidget {
               title: category.name,
               meals: filteredMeals,
               onToggleFavorite: onToggleFavorite,
+              favoriteMeals: favoriteMeals,
             ),
       ),
     );
