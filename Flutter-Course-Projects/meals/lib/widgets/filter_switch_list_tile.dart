@@ -1,54 +1,38 @@
 import 'package:flutter/material.dart';
 
-
-class FilterSwitchlistTile extends StatefulWidget{
-  
-  FilterSwitchlistTile({
+class FilterSwitchlistTile extends StatelessWidget {
+  const FilterSwitchlistTile({
     super.key,
-    required this.booleanCheck,
+    required this.value,
     required this.title,
     required this.subtitle,
+    required this.onChanged,
   });
 
-  var booleanCheck = false;
+  final bool value;
   final String title;
   final String subtitle;
+  final void Function(bool newValue) onChanged;
 
-  @override
-  State<StatefulWidget> createState() {
-    return _FilterSwitchlistTileState();
-  }
-}
-
-class _FilterSwitchlistTileState extends State<FilterSwitchlistTile>{
-  
   @override
   Widget build(BuildContext context) {
     return SwitchListTile(
-            value: widget.booleanCheck,
-            onChanged: (isChekced) {
-              setState(() {
-                if (!widget.booleanCheck) {
-                  widget.booleanCheck = true;
-                } else {
-                  widget.booleanCheck = false;
-                }
-              });
-            },
-            title: Text(
-              widget.title,
-              style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                color: Theme.of(context).colorScheme.secondary,
-              ),
+      value: value,
+      onChanged: onChanged,
+      title: Text(
+        title,
+        style: Theme.of(context).textTheme.titleLarge!.copyWith(
+              color: Theme.of(context).colorScheme.secondary,
             ),
-            subtitle: Text(
-              widget.subtitle,
-              style: Theme.of(context).textTheme.labelMedium!.copyWith(
-                color: Theme.of(context).colorScheme.primary,
-              ),
+      ),
+      subtitle: Text(
+        subtitle,
+        style: Theme.of(context).textTheme.labelMedium!.copyWith(
+              color: Theme.of(context).colorScheme.primary,
             ),
-            activeColor: Theme.of(context).colorScheme.tertiary,
-            contentPadding: const EdgeInsets.only(left: 32, right: 22),
-          );
+      ),
+      activeColor: Theme.of(context).colorScheme.tertiary,
+      contentPadding: const EdgeInsets.only(left: 32, right: 22),
+    );
   }
 }
