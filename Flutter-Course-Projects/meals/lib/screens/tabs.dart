@@ -19,13 +19,10 @@ class _TabsScreenState extends State<TabsScreen> {
 
   final List<Meal> _favoriteMeals = [];
 
-  void _showInfoMessage(String message){
+  void _showInfoMessage(String message) {
     ScaffoldMessenger.of(context).clearSnackBars();
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(message),
-        duration: Duration(seconds: 3),
-      )
+      SnackBar(content: Text(message), duration: Duration(seconds: 3)),
     );
   }
 
@@ -34,14 +31,13 @@ class _TabsScreenState extends State<TabsScreen> {
 
     setState(() {
       if (isExisting) {
-      _favoriteMeals.remove(meal);
-      _showInfoMessage('Meal is no longer a favorite');
-    } else {
-      _favoriteMeals.add(meal);
-      _showInfoMessage('Marked as favorite');
-    }
+        _favoriteMeals.remove(meal);
+        _showInfoMessage('Meal is no longer a favorite');
+      } else {
+        _favoriteMeals.add(meal);
+        _showInfoMessage('Marked as favorite');
+      }
     });
-    
   }
 
   void _selectPage(int index) {
@@ -50,11 +46,12 @@ class _TabsScreenState extends State<TabsScreen> {
     });
   }
 
-  void _setScreen(String identifier){
-    if (identifier == 'filters'){
-      Navigator.of(context).push(MaterialPageRoute(builder: (context) => const FiltersScreen(),));
-    }else{
-      Navigator.of(context).pop();
+  void _setScreen(String identifier) {
+    Navigator.of(context).pop();
+    if (identifier == 'filters') {
+      Navigator.of(
+        context,
+      ).push(MaterialPageRoute(builder: (context) => const FiltersScreen()));
     }
   }
 
@@ -75,7 +72,7 @@ class _TabsScreenState extends State<TabsScreen> {
 
     return Scaffold(
       appBar: AppBar(title: Text(activePageTitle)),
-      drawer: MainDrawer(onSelectScreen: _setScreen,),
+      drawer: MainDrawer(onSelectScreen: _setScreen),
       body: activePage,
       bottomNavigationBar: BottomNavigationBar(
         onTap: _selectPage,

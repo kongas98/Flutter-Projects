@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:meals/widgets/filter_switch_list_tile.dart';
 
 class FiltersScreen extends StatefulWidget {
   const FiltersScreen({super.key});
@@ -10,40 +11,48 @@ class FiltersScreen extends StatefulWidget {
 }
 
 class _FiltersScreenState extends State<FiltersScreen> {
-
   var _glutenFreeFilterSet = false;
+  var _veganFilterSet = false;
+  var _lactoseFreeFilterSet = false;
+  var _vegeterianFilterSet = false;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text("Your Filters")),
+      // drawer: MainDrawer(
+      //   onSelectScreen: (identifier) {
+      //     Navigator.of(context).pop();
+      //     if (identifier == 'meals') {
+      //       Navigator.of(
+      //         context,
+      //       ).pushReplacement(MaterialPageRoute(builder: (context) => TabsScreen()));
+      //     }
+      //   },
+      // ),
       body: Column(
         children: [
-          SwitchListTile(
-            value: _glutenFreeFilterSet,
-            onChanged: (isChekced){
-              setState(() {
-                if (!_glutenFreeFilterSet){
-                  _glutenFreeFilterSet = true;
-                }else{
-                  _glutenFreeFilterSet = false;
-                }  
-              });
-            },
-            title: Text(
-              'Gluten-Free',
-              style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                color: Theme.of(context).colorScheme.secondary,
-              ),
-            ),
-            subtitle: Text(
-              "Only includes gluten-free meals",
-              style: Theme.of(context).textTheme.labelMedium!.copyWith(
-                color: Theme.of(context).colorScheme.primary,),
+          FilterSwitchlistTile(
+            booleanCheck: false,
+            title: 'Glutten-Free',
+            subtitle: "Only includes gluten-free meals",
           ),
-          activeColor: Theme.of(context).colorScheme.tertiary,
-          contentPadding: const EdgeInsets.only(left: 32, right: 22),
-      )],
+          FilterSwitchlistTile(
+            booleanCheck: false,
+            title: 'Lactose-Free',
+            subtitle: "Only includes lactose-free meals",
+          ),
+          FilterSwitchlistTile(
+            booleanCheck: false,
+            title: 'Only Vegan',
+            subtitle: "Only includes vegan meals",
+          ),
+          FilterSwitchlistTile(
+            booleanCheck: false,
+            title: 'Vegeterian-Free',
+            subtitle: "Only includes vegeterian meals",
+          ),
+        ],
       ),
     );
   }
